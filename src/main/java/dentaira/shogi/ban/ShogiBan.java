@@ -61,7 +61,7 @@ public class ShogiBan {
 
     private static void put歩(Koma[] line) {
         for (int i = 0; i < line.length; i++) {
-            line[i] = new Koma(歩);
+            line[i] = new Koma(歩兵);
         }
     }
 

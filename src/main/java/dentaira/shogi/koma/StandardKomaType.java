@@ -10,7 +10,7 @@ public enum StandardKomaType implements KomaType {
     銀将,
     桂馬,
     香車,
-    歩;
+    歩兵;
     
     private String abbreviation;
 
