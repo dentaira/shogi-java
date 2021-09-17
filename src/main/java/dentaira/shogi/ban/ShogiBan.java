@@ -65,7 +65,7 @@ public class ShogiBan {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 System.out.print(" ");
-                System.out.print(field[i][j] == null ? '　' : field[i][j]);
+                System.out.print(field[i][j] == null ? '　' : field[i][j].getType().getAbbreviation());
                 System.out.print(" ");
             }
             System.out.println();

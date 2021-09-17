@@ -8,8 +8,7 @@ public class Koma {
         this.type = type;
     }
 
-    @Override
-    public String toString() {
-        return type.getAbbreviation();
+    public StandardKomaType getType() {
+        return type;
     }
 }
