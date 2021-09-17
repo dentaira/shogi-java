@@ -2,5 +2,5 @@ package dentaira.shogi.koma;
 
 public interface KomaType {
 
-    String display();
+    String getAbbreviation();
 }

@@ -10,6 +10,6 @@ public class Koma {
 
     @Override
     public String toString() {
-        return type.display();
+        return type.getAbbreviation();
     }
 }

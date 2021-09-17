@@ -12,14 +12,14 @@ public enum StandardKomaType implements KomaType {
     香車,
     歩;
     
-    private String display;
+    private String abbreviation;
 
     StandardKomaType() {
-        this.display = String.valueOf(name().charAt(0));
+        this.abbreviation = String.valueOf(name().charAt(0));
     }
 
     @Override
-    public String display() {
-        return display;
+    public String getAbbreviation() {
+        return abbreviation;
     }
 }

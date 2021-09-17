@@ -12,14 +12,14 @@ public enum PromotedKomaType implements KomaType {
     成香("索"),
     と金("と");
 
-    private String display;
+    private String abbreviation;
 
-    PromotedKomaType(String display) {
-        this.display = display;
+    PromotedKomaType(String abbreviation) {
+        this.abbreviation = abbreviation;
     }
 
     @Override
-    public String display() {
-        return display;
+    public String getAbbreviation() {
+        return abbreviation;
     }
 }
