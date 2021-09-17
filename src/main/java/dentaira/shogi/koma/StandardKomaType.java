@@ -2,12 +2,12 @@ package dentaira.shogi.koma;
 
 public enum StandardKomaType implements KomaType {
 
-    玉,
-    王,
+    玉将,
+    王将,
     飛車,
-    角,
-    金,
-    銀,
+    角行,
+    金将,
+    銀将,
     桂馬,
     香車,
     歩;

@@ -22,24 +22,24 @@ public class ShogiBan {
 
     private static void putKoma(Koma[][] field) {
 
-        field[0][4] = new Koma(王);
-        field[8][4] = new Koma(玉);
+        field[0][4] = new Koma(王将);
+        field[8][4] = new Koma(玉将);
 
         field[1][2] = new Koma(飛車);
         field[7][6] = new Koma(飛車);
 
-        field[1][6] = new Koma(角);
-        field[7][2] = new Koma(角);
+        field[1][6] = new Koma(角行);
+        field[7][2] = new Koma(角行);
 
-        field[0][3] = new Koma(金);
-        field[0][5] = new Koma(金);
-        field[8][3] = new Koma(金);
-        field[8][5] = new Koma(金);
+        field[0][3] = new Koma(金将);
+        field[0][5] = new Koma(金将);
+        field[8][3] = new Koma(金将);
+        field[8][5] = new Koma(金将);
 
-        field[0][2] = new Koma(銀);
-        field[0][6] = new Koma(銀);
-        field[8][2] = new Koma(銀);
-        field[8][6] = new Koma(銀);
+        field[0][2] = new Koma(銀将);
+        field[0][6] = new Koma(銀将);
+        field[8][2] = new Koma(銀将);
+        field[8][6] = new Koma(銀将);
 
         field[0][1] = new Koma(桂馬);
         field[0][7] = new Koma(桂馬);
