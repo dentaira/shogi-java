@@ -1,6 +1,7 @@
 package dentaira.shogi.ban;
 
 import dentaira.shogi.koma.Koma;
+import dentaira.shogi.koma.KomaType;
 
 import static dentaira.shogi.koma.StandardKomaType.*;
 
@@ -12,73 +13,75 @@ public class ShogiBan {
 
     private Koma[][] field;
 
-    private ShogiBan(Koma[][] field) {
-        this.field = field;
+    public ShogiBan() {
+        this.field = new Koma[9][9];
+        initField();
     }
 
-    public static ShogiBan create() {
-        var field = new Koma[9][9];
+    private void initField() {
 
-        putKoma(field);
+        setKoma(new Koma(王将), 5, 1);
+        setKoma(new Koma(玉将), 5, 9);
 
-        return new ShogiBan(field);
+        setKoma(new Koma(飛車), 8, 2);
+        setKoma(new Koma(飛車), 2, 8);
+
+        setKoma(new Koma(角行), 2, 2);
+        setKoma(new Koma(角行), 8, 8);
+
+        setKoma(new Koma(金将), 6, 1);
+        setKoma(new Koma(金将), 4, 1);
+        setKoma(new Koma(金将), 6, 9);
+        setKoma(new Koma(金将), 4, 9);
+
+        setKoma(new Koma(銀将), 7, 1);
+        setKoma(new Koma(銀将), 3, 1);
+        setKoma(new Koma(銀将), 7, 9);
+        setKoma(new Koma(銀将), 3, 9);
+
+        setKoma(new Koma(桂馬), 2, 1);
+        setKoma(new Koma(桂馬), 8, 1);
+        setKoma(new Koma(桂馬), 2, 9);
+        setKoma(new Koma(桂馬), 8, 9);
+
+        setKoma(new Koma(香車), 1, 1);
+        setKoma(new Koma(香車), 9, 1);
+        setKoma(new Koma(香車), 1, 9);
+        setKoma(new Koma(香車), 9, 9);
+
+        setHorizontalKoma(歩兵, 3);
+        setHorizontalKoma(歩兵, 7);
     }
 
-    private static void putKoma(Koma[][] field) {
-
-        field[0][4] = new Koma(王将);
-        field[8][4] = new Koma(玉将);
-
-        field[1][2] = new Koma(飛車);
-        field[7][6] = new Koma(飛車);
-
-        field[1][6] = new Koma(角行);
-        field[7][2] = new Koma(角行);
-
-        field[0][3] = new Koma(金将);
-        field[0][5] = new Koma(金将);
-        field[8][3] = new Koma(金将);
-        field[8][5] = new Koma(金将);
-
-        field[0][2] = new Koma(銀将);
-        field[0][6] = new Koma(銀将);
-        field[8][2] = new Koma(銀将);
-        field[8][6] = new Koma(銀将);
-
-        field[0][1] = new Koma(桂馬);
-        field[0][7] = new Koma(桂馬);
-        field[8][1] = new Koma(桂馬);
-        field[8][7] = new Koma(桂馬);
-
-        field[0][0] = new Koma(香車);
-        field[0][8] = new Koma(香車);
-        field[8][0] = new Koma(香車);
-        field[8][8] = new Koma(香車);
-
-        put歩(field[2]);
-        put歩(field[6]);
+    public Koma getKoma(int x, int y) {
+        return field[y - 1][x - 1];
     }
 
-    private static void put歩(Koma[] line) {
-        for (int i = 0; i < line.length; i++) {
-            line[i] = new Koma(歩兵);
+    private void setKoma(Koma koma, int x, int y) {
+        field[y - 1][x - 1] = koma;
+    }
+
+    private void setHorizontalKoma(KomaType komaType, int y) {
+        Koma[] horizontal = field[y - 1];
+        for (int i = 0; i < horizontal.length; i++) {
+            horizontal[i] = new Koma(komaType);
         }
     }
-
     public void render() {
-        for (int i = sujiArray.length; 0 < i; i--) {
+        for (int x = sujiArray.length; 0 < x; x--) {
             System.out.print(" ");
-            System.out.print(sujiArray[i - 1]);
+            System.out.print(sujiArray[x - 1]);
             System.out.print(" ");
         }
         System.out.println();
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
+        for (int y = 1; y <= 9; y++) {
+            for (int x = 9; 1 <= x; x--) {
                 System.out.print(" ");
-                System.out.print(field[i][j] == null ? '　' : field[i][j].getType().getAbbreviation());
+                var koma = getKoma(x, y);
+                System.out.print(koma == null ? '　' : koma.getType().getAbbreviation());
                 System.out.print(" ");
             }
-            System.out.println(danArray[i]);
+            System.out.println(danArray[y - 1]);
         }
     }
 }

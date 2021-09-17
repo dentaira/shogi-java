@@ -5,7 +5,7 @@ import dentaira.shogi.ban.ShogiBan;
 public class CommandLineShogiRunner {
 
     public static void main(String[] args) {
-        var shogiBan = ShogiBan.create();
+        var shogiBan = new ShogiBan();
         shogiBan.render();
     }
 }

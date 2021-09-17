@@ -2,13 +2,13 @@ package dentaira.shogi.koma;
 
 public class Koma {
 
-    private StandardKomaType type;
+    private KomaType type;
 
-    public Koma(StandardKomaType type) {
+    public Koma(KomaType type) {
         this.type = type;
     }
 
-    public StandardKomaType getType() {
+    public KomaType getType() {
         return type;
     }
 }
