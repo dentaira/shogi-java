@@ -9,40 +9,45 @@ public class ShogiBan {
 
     private Koma[][] field;
 
-    public ShogiBan() {
+    ShogiBan() {
         this.field = new Koma[9][9];
-        initField();
     }
 
-    private void initField() {
+    public static ShogiBan setup() {
+        var ban = new ShogiBan();
+        ban.init();
+        return ban;
+    }
+
+    private void init() {
 
         setKoma(new Koma(王将), 5, 1);
         setKoma(new Koma(玉将), 5, 9);
 
-        setKoma(new Koma(飛車), 8, 2);
         setKoma(new Koma(飛車), 2, 8);
+        setKoma(new Koma(飛車), 8, 2);
 
         setKoma(new Koma(角行), 2, 2);
         setKoma(new Koma(角行), 8, 8);
 
-        setKoma(new Koma(金将), 6, 1);
         setKoma(new Koma(金将), 4, 1);
-        setKoma(new Koma(金将), 6, 9);
         setKoma(new Koma(金将), 4, 9);
+        setKoma(new Koma(金将), 6, 1);
+        setKoma(new Koma(金将), 6, 9);
 
-        setKoma(new Koma(銀将), 7, 1);
         setKoma(new Koma(銀将), 3, 1);
-        setKoma(new Koma(銀将), 7, 9);
         setKoma(new Koma(銀将), 3, 9);
+        setKoma(new Koma(銀将), 7, 1);
+        setKoma(new Koma(銀将), 7, 9);
 
         setKoma(new Koma(桂馬), 2, 1);
-        setKoma(new Koma(桂馬), 8, 1);
         setKoma(new Koma(桂馬), 2, 9);
+        setKoma(new Koma(桂馬), 8, 1);
         setKoma(new Koma(桂馬), 8, 9);
 
         setKoma(new Koma(香車), 1, 1);
-        setKoma(new Koma(香車), 9, 1);
         setKoma(new Koma(香車), 1, 9);
+        setKoma(new Koma(香車), 9, 1);
         setKoma(new Koma(香車), 9, 9);
 
         setHorizontalKoma(歩兵, 3);
@@ -57,16 +62,22 @@ public class ShogiBan {
         return getKoma(masu.x(), masu.y());
     }
 
-    private void setKoma(Koma koma, int x, int y) {
+    void setKoma(Koma koma, int x, int y) {
         field[y - 1][x - 1] = koma;
     }
 
-    private void setHorizontalKoma(KomaType komaType, int y) {
-        Koma[] horizontal = field[y - 1];
-        for (int i = 0; i < horizontal.length; i++) {
-            horizontal[i] = new Koma(komaType);
-        }
+    void setKoma(Koma koma, Masu masu) {
+        setKoma(koma, masu.x(), masu.y());
     }
+
+    public Koma moveKoma(Masu from, Masu to) {
+        var moveKoma = getKoma(from);
+        var pickedKoma = getKoma(to);
+        setKoma(moveKoma, to);
+        setKoma(null, from);
+        return pickedKoma;
+    }
+
     public void render() {
         for (int x = 9; 0 < x; x--) {
             System.out.print(" ");
@@ -82,6 +93,13 @@ public class ShogiBan {
                 System.out.print(" ");
             }
             System.out.println(Masu.getDanSymbol(y));
+        }
+    }
+
+    private void setHorizontalKoma(KomaType komaType, int y) {
+        Koma[] horizontal = field[y - 1];
+        for (int i = 0; i < horizontal.length; i++) {
+            horizontal[i] = new Koma(komaType);
         }
     }
 }
