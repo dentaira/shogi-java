@@ -7,10 +7,6 @@ import static dentaira.shogi.koma.StandardKomaType.*;
 
 public class ShogiBan {
 
-    private static String[] sujiArray = { "１", "２", "３", "４", "５", "６", "７", "８", "９" };
-
-    private static String[] danArray = { "一", "二", "三", "四", "五", "六", "七", "八", "九" };
-
     private Koma[][] field;
 
     public ShogiBan() {
@@ -72,9 +68,9 @@ public class ShogiBan {
         }
     }
     public void render() {
-        for (int x = sujiArray.length; 0 < x; x--) {
+        for (int x = 9; 0 < x; x--) {
             System.out.print(" ");
-            System.out.print(sujiArray[x - 1]);
+            System.out.print(Masu.getSujiSymbol(x));
             System.out.print(" ");
         }
         System.out.println();
@@ -85,7 +81,7 @@ public class ShogiBan {
                 System.out.print(koma == null ? '　' : koma.getType().getAbbreviation());
                 System.out.print(" ");
             }
-            System.out.println(danArray[y - 1]);
+            System.out.println(Masu.getDanSymbol(y));
         }
     }
 }

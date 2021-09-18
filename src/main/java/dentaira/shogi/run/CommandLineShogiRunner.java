@@ -2,6 +2,7 @@ package dentaira.shogi.run;
 
 import dentaira.shogi.ban.Masu;
 import dentaira.shogi.ban.ShogiBan;
+import dentaira.shogi.koma.Koma;
 
 import java.util.Scanner;
 
@@ -21,7 +22,9 @@ public class CommandLineShogiRunner {
                     System.out.println("2桁の数字を入力してください。");
                     continue;
                 }
-                System.out.println(shogiBan.getKoma(inputMasu.getInput()).getType());
+                var masu = inputMasu.getInput();
+                var koma = shogiBan.getKoma(masu);
+                System.out.println(masu + " " + koma.getType().getAbbreviation());
             }
         }
     }
