@@ -57,6 +57,10 @@ public class ShogiBan {
         return field[y - 1][x - 1];
     }
 
+    public Koma getKoma(Masu masu) {
+        return getKoma(masu.x(), masu.y());
+    }
+
     private void setKoma(Koma koma, int x, int y) {
         field[y - 1][x - 1] = koma;
     }
