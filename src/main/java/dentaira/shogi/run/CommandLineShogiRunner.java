@@ -65,20 +65,6 @@ public class CommandLineShogiRunner {
         return List.of(player1, player2);
     }
 
-    private static Masu selectTo(Scanner sc) {
-
-        System.out.println("移動するマスを選択してください。");
-        System.out.print("筋段:");
-
-        var inputResult = scanInputMasu(sc);
-        if (!inputResult.isValid()) {
-            System.out.println("2桁の数字を入力してください。");
-            return null;
-        }
-
-        return inputResult.getInput();
-    }
-
     private static Masu selectFrom(Player player, ShogiBan shogiBan, Scanner sc) {
 
         System.out.println("コマを選択してください。");
@@ -106,6 +92,20 @@ public class CommandLineShogiRunner {
         System.out.println(masu + " " + koma.getType().getAbbreviation());
 
         return masu;
+    }
+
+    private static Masu selectTo(Scanner sc) {
+
+        System.out.println("移動するマスを選択してください。");
+        System.out.print("筋段:");
+
+        var inputResult = scanInputMasu(sc);
+        if (!inputResult.isValid()) {
+            System.out.println("2桁の数字を入力してください。");
+            return null;
+        }
+
+        return inputResult.getInput();
     }
 
     private static ScanResult<Masu> scanInputMasu(Scanner sc) {
