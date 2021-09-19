@@ -1,6 +1,7 @@
 package dentaira.shogi.ban;
 
 import dentaira.shogi.koma.Koma;
+import dentaira.shogi.koma.MoveDirection;
 
 public class ShogiBan {
 
@@ -45,10 +46,14 @@ public class ShogiBan {
             for (int x = 9; 1 <= x; x--) {
                 System.out.print(" ");
                 var koma = getKoma(x, y);
-                System.out.print(koma == null ? '　' : koma.getType().getAbbreviation());
+                System.out.print(koma == null ? "　 " : koma.getType().getAbbreviation() + getMoveDirectionIcon(koma));
                 System.out.print(" ");
             }
-            System.out.println(Masu.getDanSymbol(y));
+            System.out.println(" " + Masu.getDanSymbol(y));
         }
+    }
+
+    private String getMoveDirectionIcon(Koma koma) {
+        return koma.getMoveDirection() == MoveDirection.LOWER ? "↑" : "↓";
     }
 }

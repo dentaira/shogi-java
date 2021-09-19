@@ -5,6 +5,7 @@ import dentaira.shogi.ban.Masu;
 import dentaira.shogi.ban.ShogiBan;
 import dentaira.shogi.koma.Koma;
 import dentaira.shogi.koma.KomaType;
+import dentaira.shogi.koma.MoveDirection;
 import dentaira.shogi.koma.StandardKomaType;
 
 import java.util.ArrayList;
@@ -42,8 +43,9 @@ public class Player {
     }
 
     public void setUp(ShogiBan shogiBan) {
+        MoveDirection moveDirection = playOrder.getMoveDirection();
         for (Map.Entry<Masu, KomaType> entry : InitialKomaPositions.getPositions(playOrder).entrySet()) {
-            var koma = new Koma(entry.getValue());
+            var koma = new Koma(entry.getValue(), moveDirection);
             komas.add(koma);
             shogiBan.setKoma(koma, entry.getKey());
         }

@@ -4,11 +4,18 @@ public class Koma {
 
     private KomaType type;
 
-    public Koma(KomaType type) {
+    private MoveDirection moveDirection;
+
+    public Koma(KomaType type, MoveDirection moveDirection) {
         this.type = type;
+        this.moveDirection = moveDirection;
     }
 
     public KomaType getType() {
         return type;
+    }
+
+    public MoveDirection getMoveDirection() {
+        return moveDirection;
     }
 }
