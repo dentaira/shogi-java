@@ -25,11 +25,17 @@ public class CommandLineShogiRunner {
                 var turnPlayer = players.get(turn % 2);
                 var nonTurnPlayer = players.stream().filter(p -> p != turnPlayer).findFirst().get();
                 System.out.println((turn + 1) + "手目 " + turnPlayer.getName() + " の番です。");
-                var from = selectFrom(shogiBan, sc);
+
+                var from = selectFrom(turnPlayer, shogiBan, sc);
                 if (from == null) continue;
 
                 var to = selectTo(sc);
                 if (to == null) continue;
+
+                if (!turnPlayer.canMoveTo(to, shogiBan)) {
+                    System.out.println("自身のコマが存在するマスには新たにコマを置けません。");
+                    continue;
+                }
 
                 var pickedKoma = shogiBan.moveKoma(from, to);
                 if (pickedKoma != null) {
@@ -73,7 +79,7 @@ public class CommandLineShogiRunner {
         return inputResult.getInput();
     }
 
-    private static Masu selectFrom(ShogiBan shogiBan, Scanner sc) {
+    private static Masu selectFrom(Player player, ShogiBan shogiBan, Scanner sc) {
 
         System.out.println("コマを選択してください。");
         System.out.print("筋段:");
@@ -86,6 +92,16 @@ public class CommandLineShogiRunner {
 
         var masu = inputResult.getInput();
         var koma = shogiBan.getKoma(masu);
+
+        if (koma == null) {
+            System.out.println("自分のコマが存在するマスを選択してください。");
+            return null;
+        }
+
+        if (!player.hasKoma(koma)) {
+            System.out.println("自分のコマを選択してください。");
+            return null;
+        }
 
         System.out.println(masu + " " + koma.getType().getAbbreviation());
 

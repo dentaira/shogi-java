@@ -49,7 +49,16 @@ public class Player {
         }
     }
 
+    public boolean hasKoma(Koma koma) {
+        return komas.contains(koma);
+    }
+
     public boolean hasKing() {
         return komas.stream().anyMatch(k -> k.getType() == StandardKomaType.玉将 || k.getType() == StandardKomaType.王将);
+    }
+
+    public boolean canMoveTo(Masu to, ShogiBan shogiBan) {
+        var koma = shogiBan.getKoma(to);
+        return !hasKoma(koma);
     }
 }
