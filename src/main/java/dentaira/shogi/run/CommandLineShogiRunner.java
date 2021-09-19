@@ -2,18 +2,29 @@ package dentaira.shogi.run;
 
 import dentaira.shogi.ban.Masu;
 import dentaira.shogi.ban.ShogiBan;
+import dentaira.shogi.player.PlayOrder;
+import dentaira.shogi.player.Player;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineShogiRunner {
 
     public static void main(String[] args) {
-        var shogiBan = ShogiBan.setup();
+
+        var shogiBan = new ShogiBan();
+        List<Player> players = initPlayers(shogiBan);
 
         try (var sc = new Scanner(System.in)) {
+
+            int turn = 0;
+
             while (true) {
                 shogiBan.render();
 
+                var turnPlayer = players.get(turn % 2);
+                var nonTurnPlayer = players.stream().filter(p -> p != turnPlayer).findFirst().get();
+                System.out.println((turn + 1) + "手目 " + turnPlayer.getName() + " の番です。");
                 var from = selectFrom(shogiBan, sc);
                 if (from == null) continue;
 
@@ -22,16 +33,36 @@ public class CommandLineShogiRunner {
 
                 var pickedKoma = shogiBan.moveKoma(from, to);
                 if (pickedKoma != null) {
-                    System.out.println("コマを取得しました。" + pickedKoma.getType().name());
+                    nonTurnPlayer.removeKoma(pickedKoma);
+                    turnPlayer.addKoma(pickedKoma);
+                    System.out.println(turnPlayer.getName() + " が " + pickedKoma.getType().name() + " を取得しました。");
                 }
 
+                if (!nonTurnPlayer.hasKing()) {
+                    System.out.println(turnPlayer.getName() + " の勝利です！");
+                    return;
+                }
+
+                turn++;
             }
         }
+    }
+
+    private static List<Player> initPlayers(ShogiBan shogiBan) {
+
+        var player1 = new Player("プレイヤー１", PlayOrder.先手);
+        player1.setUp(shogiBan);
+
+        var player2 = new Player("プレイヤー２", PlayOrder.後手);
+        player2.setUp(shogiBan);
+
+        return List.of(player1, player2);
     }
 
     private static Masu selectTo(Scanner sc) {
 
         System.out.println("移動するマスを選択してください。");
+        System.out.print("筋段:");
 
         var inputResult = scanInputMasu(sc);
         if (!inputResult.isValid()) {

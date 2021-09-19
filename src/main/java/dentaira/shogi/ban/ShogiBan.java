@@ -1,30 +1,16 @@
 package dentaira.shogi.ban;
 
 import dentaira.shogi.koma.Koma;
-import dentaira.shogi.koma.KomaType;
-import dentaira.shogi.player.PlayOrder;
-
-import java.util.Map;
 
 public class ShogiBan {
 
     private Koma[][] field;
 
-    ShogiBan() {
+    public ShogiBan() {
         this.field = new Koma[9][9];
     }
 
-    public static ShogiBan setup() {
-        var ban = new ShogiBan();
-        for (PlayOrder order : PlayOrder.values()) {
-            for (Map.Entry<Masu, KomaType> entry : InitialKomaPositions.getPositions(order).entrySet()) {
-                ban.setKoma(new Koma(entry.getValue()), entry.getKey());
-            }
-        }
-        return ban;
-    }
-
-    public Koma getKoma(int x, int y) {
+    Koma getKoma(int x, int y) {
         return field[y - 1][x - 1];
     }
 
@@ -36,7 +22,7 @@ public class ShogiBan {
         field[y - 1][x - 1] = koma;
     }
 
-    void setKoma(Koma koma, Masu masu) {
+    public void setKoma(Koma koma, Masu masu) {
         setKoma(koma, masu.x(), masu.y());
     }
 
