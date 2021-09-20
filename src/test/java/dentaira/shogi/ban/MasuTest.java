@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -24,6 +26,37 @@ class MasuTest {
         @CsvSource({"0, 1", "1, 0", "10, 9", "9, 10", "11, 1", "1, 11", "-1, 0", "0, -1"})
         void testInvalidValue(int x, int y) {
             assertThrows(IllegalArgumentException.class, () -> new Masu(x, y));
+        }
+    }
+
+    @Nested
+    class ShiftTest {
+
+        @ParameterizedTest
+        @CsvSource({
+                "1, 1, 1, 0",
+                "1, 1, 0, 1",
+                "2, 2, -1, 0",
+                "2, 2, 0, -1",
+                "1, 1, 1, 5",
+                "1, 1, 8, 7",
+                "1, 5, 3, 4",
+        })
+        void testValidValue(int nowX, int nowY, int plusX, int plusY) {
+            var now = new Masu(nowX, nowY);
+            var actual = now.shift(plusX, plusY).get();
+            assertEquals(new Masu(nowX + plusX, nowY + plusY), actual);
+        }
+
+        @ParameterizedTest
+        @CsvSource({
+                "1, 1, -1, 0",
+                "1, 1, 0, -1",
+        })
+        void testInvelidValue(int nowX, int nowY, int plusX, int plusY) {
+            var now = new Masu(nowX, nowY);
+            var actual = now.shift(plusX, plusY);
+            assertEquals(Optional.empty(), actual);
         }
     }
 

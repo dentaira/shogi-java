@@ -1,5 +1,5 @@
 package dentaira.shogi.koma;
 
-public enum MoveDirection {
+public enum MovingDirection {
     LOWER, HIGHER;
 }

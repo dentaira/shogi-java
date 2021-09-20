@@ -1,7 +1,7 @@
 package dentaira.shogi.ban;
 
 import dentaira.shogi.koma.Koma;
-import dentaira.shogi.koma.MoveDirection;
+import dentaira.shogi.koma.MovingDirection;
 import dentaira.shogi.koma.StandardKomaType;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class ShogiBanTest {
             var ban = new ShogiBan();
             var from = new Masu(1, 1);
             var to = new Masu(1, 2);
-            var koma = new Koma(StandardKomaType.歩兵, MoveDirection.LOWER);
+            var koma = new Koma(StandardKomaType.歩兵, MovingDirection.LOWER);
             ban.setKoma(koma, from);
 
             // when
@@ -38,11 +38,11 @@ class ShogiBanTest {
             var ban = new ShogiBan();
             var from = new Masu(7, 5);
             var to = new Masu(7, 4);
-            var moveKoma = new Koma(StandardKomaType.歩兵, MoveDirection.LOWER);
+            var moveKoma = new Koma(StandardKomaType.歩兵, MovingDirection.LOWER);
             ban.setKoma(moveKoma, from);
-            var placedKoma = new Koma(StandardKomaType.歩兵, MoveDirection.LOWER);
+            var placedKoma = new Koma(StandardKomaType.歩兵, MovingDirection.LOWER);
             ban.setKoma(placedKoma, to);
-            var otherKoma = new Koma(StandardKomaType.歩兵, MoveDirection.LOWER);
+            var otherKoma = new Koma(StandardKomaType.歩兵, MovingDirection.LOWER);
             ban.setKoma(otherKoma, 8, 4);
 
             // when
