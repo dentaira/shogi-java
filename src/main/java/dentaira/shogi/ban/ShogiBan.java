@@ -39,7 +39,7 @@ public class ShogiBan {
         for (int x = 9; 0 < x; x--) {
             System.out.print(" ");
             System.out.print(Masu.getSujiSymbol(x));
-            System.out.print(" ");
+            System.out.print("  ");
         }
         System.out.println();
         for (int y = 1; y <= 9; y++) {
