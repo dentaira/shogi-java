@@ -2,11 +2,13 @@ package dentaira.shogi.run;
 
 import dentaira.shogi.ban.Masu;
 import dentaira.shogi.ban.ShogiBan;
+import dentaira.shogi.koma.Koma;
 import dentaira.shogi.player.PlayOrder;
 import dentaira.shogi.player.Player;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class CommandLineShogiRunner {
 
@@ -29,7 +31,7 @@ public class CommandLineShogiRunner {
                 var from = selectFrom(turnPlayer, shogiBan, sc);
                 if (from == null) continue;
 
-                var to = selectTo(sc);
+                var to = selectTo(shogiBan, from, sc);
                 if (to == null) continue;
 
                 if (!turnPlayer.canMoveTo(to, shogiBan)) {
@@ -94,9 +96,15 @@ public class CommandLineShogiRunner {
         return masu;
     }
 
-    private static Masu selectTo(Scanner sc) {
+    private static Masu selectTo(ShogiBan shogiBan, Masu from, Scanner sc) {
 
-        System.out.println("移動するマスを選択してください。");
+        Koma koma = shogiBan.getKoma(from);
+        List<Masu> movingCandidate = koma.getMovingCandidate(from)
+                .stream()
+                .filter(m -> shogiBan.getKoma(m) == null)
+                .collect(Collectors.toList());
+        System.out.println("移動するマスを選択してください。（半角数字で入力）");
+        movingCandidate.stream().forEach(System.out::println);
         System.out.print("筋段:");
 
         var inputResult = scanInputMasu(sc);
