@@ -1,19 +1,19 @@
 package dentaira.shogi.player;
 
-import dentaira.shogi.koma.MovingDirection;
+import dentaira.shogi.koma.Forward;
 
 public enum PlayOrder {
 
-    先手(MovingDirection.LOWER),
-    後手(MovingDirection.HIGHER);
+    先手(Forward.LOWER),
+    後手(Forward.HIGHER);
 
-    private MovingDirection moveDirection;
+    private Forward forward;
 
-    PlayOrder(MovingDirection moveDirection) {
-        this.moveDirection = moveDirection;
+    PlayOrder(Forward forward) {
+        this.forward = forward;
     }
 
-    public MovingDirection getMoveDirection() {
-        return moveDirection;
+    public Forward getForward() {
+        return forward;
     }
 }

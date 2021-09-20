@@ -9,19 +9,19 @@ public class Koma {
 
     private KomaType type;
 
-    private MovingDirection movingDirection;
+    private Forward forward;
 
-    public Koma(KomaType type, MovingDirection movingDirection) {
+    public Koma(KomaType type, Forward forward) {
         this.type = type;
-        this.movingDirection = movingDirection;
+        this.forward = forward;
     }
 
     public KomaType getType() {
         return type;
     }
 
-    public MovingDirection getMovingDirection() {
-        return movingDirection;
+    public Forward getForward() {
+        return forward;
     }
 
     public List<Masu> getMovingCandidate(Masu placed) {

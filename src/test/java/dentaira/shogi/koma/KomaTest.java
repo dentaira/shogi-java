@@ -21,7 +21,7 @@ class KomaTest {
         @ParameterizedTest
         @MethodSource("testSource")
         void test(StandardKomaType komaType, int x, int y, List<Masu> expected) {
-            var koma = new Koma(komaType, MovingDirection.LOWER);
+            var koma = new Koma(komaType, Forward.LOWER);
             var placed = new Masu(x, y);
 
             var actual = koma.getMovingCandidate(placed);

@@ -1,7 +1,7 @@
 package dentaira.shogi.ban;
 
 import dentaira.shogi.koma.Koma;
-import dentaira.shogi.koma.MovingDirection;
+import dentaira.shogi.koma.Forward;
 
 public class ShogiBan {
 
@@ -54,6 +54,6 @@ public class ShogiBan {
     }
 
     private String getMovingDirectionIcon(Koma koma) {
-        return koma.getMovingDirection() == MovingDirection.LOWER ? "↑" : "↓";
+        return koma.getForward() == Forward.LOWER ? "↑" : "↓";
     }
 }
