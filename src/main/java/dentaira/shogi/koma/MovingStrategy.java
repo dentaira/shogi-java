@@ -15,6 +15,21 @@ public enum MovingStrategy {
             new MovingDistance(1, 1),
             new MovingDistance(0, 1),
             new MovingDistance(-1, 1))),
+    金将(List.of(
+            new MovingDistance(0, -1),
+            new MovingDistance(1, 0),
+            new MovingDistance(-1, 0),
+            new MovingDistance(1, 1),
+            new MovingDistance(0, 1),
+            new MovingDistance(-1, 1))),
+    銀将(List.of(
+            new MovingDistance(1, -1),
+            new MovingDistance(-1, -1),
+            new MovingDistance(1, 1),
+            new MovingDistance(0, 1),
+            new MovingDistance(-1, 1))),
+    桂馬(List.of(new MovingDistance(-1, 2), new MovingDistance(1, 2))),
+    歩兵(List.of(new MovingDistance(0, 1))),
     NOOP(Collections.emptyList());
 
     private List<MovingDistance> movingDistances;

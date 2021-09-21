@@ -113,7 +113,14 @@ public class CommandLineShogiRunner {
             return null;
         }
 
-        return inputResult.getInput();
+        var inputMasu = inputResult.getInput();
+
+        if (!movingCandidate.contains(inputMasu)) {
+            System.out.println("そのマスには移動できません。");
+            return null;
+        }
+
+        return inputMasu;
     }
 
     private static ScanResult<Masu> scanInputMasu(Scanner sc) {
