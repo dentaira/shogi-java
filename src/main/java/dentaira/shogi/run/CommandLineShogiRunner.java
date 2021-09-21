@@ -2,7 +2,6 @@ package dentaira.shogi.run;
 
 import dentaira.shogi.ban.Masu;
 import dentaira.shogi.ban.ShogiBan;
-import dentaira.shogi.koma.Koma;
 import dentaira.shogi.player.PlayOrder;
 import dentaira.shogi.player.Player;
 
@@ -98,10 +97,11 @@ public class CommandLineShogiRunner {
 
     private static Masu selectTo(ShogiBan shogiBan, Masu from, Scanner sc) {
 
-        Koma koma = shogiBan.getKoma(from);
+        var koma = shogiBan.getKoma(from);
+        var myForward = koma.getForward();
         List<Masu> movingCandidate = koma.getMovingCandidate(from)
                 .stream()
-                .filter(m -> shogiBan.getKoma(m) == null)
+                .filter(m -> shogiBan.getKoma(m) == null || shogiBan.getKoma(m).getForward() != myForward)
                 .collect(Collectors.toList());
         System.out.println("移動するマスを選択してください。（半角数字で入力）");
         movingCandidate.stream().forEach(System.out::println);
