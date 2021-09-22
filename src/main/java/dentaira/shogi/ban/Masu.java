@@ -1,5 +1,7 @@
 package dentaira.shogi.ban;
 
+import dentaira.shogi.koma.Forward;
+
 import java.util.Optional;
 
 public record Masu(int x, int y) {
@@ -30,11 +32,19 @@ public record Masu(int x, int y) {
         return danArray[y - 1];
     }
 
+    @Deprecated
     public Optional<Masu> shift(int x, int y) {
         try {
             return Optional.of(new Masu(x() + x, y() + y));
         } catch (IllegalArgumentException e) {
             return Optional.empty();
         }
+    }
+
+    public Optional<Masu> shift(int x, int y, Forward forward) {
+        return switch (forward) {
+            case LOWER -> shift(-x, -y);
+            case HIGHER -> shift(x, y);
+        };
     }
 }
