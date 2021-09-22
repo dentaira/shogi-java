@@ -13,16 +13,15 @@ public class Koma {
 
     private Forward forward;
 
-    private BiFunction<Masu, MovingDistance, Optional<Masu>> shiftFunc;
+    private BiFunction<Masu, MovingDistance, Optional<Masu>> moveFunc;
 
     public Koma(KomaType type, Forward forward) {
         this.type = type;
         this.forward = forward;
-        if (forward == Forward.LOWER) {
-            shiftFunc = (m, d) -> m.shift(-d.x(), -d.y());
-        } else {
-            shiftFunc = (m, d) -> m.shift(d.x(), d.y());
-        }
+        this.moveFunc = switch (forward) {
+            case LOWER -> (m, d) -> m.shift(-d.x(), -d.y());
+            case HIGHER -> (m, d) -> m.shift(d.x(), d.y());
+        };
     }
 
     public KomaType getType() {
@@ -36,7 +35,7 @@ public class Koma {
     public List<Masu> getMovingCandidate(Masu placed) {
         var list = new ArrayList<Masu>();
         for (var movingDistance : getType().getMovingDistances()) {
-            var candidate = shiftFunc.apply(placed, movingDistance);
+            var candidate = moveFunc.apply(placed, movingDistance);
             candidate.ifPresent(list::add);
         }
         return list;
