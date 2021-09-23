@@ -63,7 +63,31 @@ public enum MovingStrategy {
             return getMovingLine(8, i -> position.shift(0, i, forward), forward, shogiBan);
         }
     },
-    歩兵(List.of(new MovingDistance(0, 1)));
+    歩兵(List.of(new MovingDistance(0, 1))),
+    竜王 {
+        @Override
+        public List<Masu> getMovingCandidates(Masu position, Forward forward, ShogiBan shogiBan) {
+            var list = new ArrayList<Masu>();
+            list.addAll(飛車.getMovingCandidates(position, forward, shogiBan));
+            getMovingCandidate(new MovingDistance(-1, -1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingCandidate(new MovingDistance(1, -1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingCandidate(new MovingDistance(1, 1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingCandidate(new MovingDistance(-1, 1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            return list;
+        }
+    },
+    竜馬 {
+        @Override
+        public List<Masu> getMovingCandidates(Masu position, Forward forward, ShogiBan shogiBan) {
+            var list = new ArrayList<Masu>();
+            list.addAll(角行.getMovingCandidates(position, forward, shogiBan));
+            getMovingCandidate(new MovingDistance(0, -1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingCandidate(new MovingDistance(0, 1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingCandidate(new MovingDistance(1, 0), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingCandidate(new MovingDistance(-1, 0), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            return list;
+        }
+    };
 
     private List<MovingDistance> movingDistances;
 
