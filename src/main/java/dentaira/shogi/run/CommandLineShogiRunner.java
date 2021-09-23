@@ -15,12 +15,14 @@ public class CommandLineShogiRunner {
         var shogiBan = new ShogiBan();
         List<Player> players = initPlayers(shogiBan);
 
+        var renderer = new CommandLineShogiRenderer(shogiBan, players.get(0), players.get(1));
+
         try (var sc = new Scanner(System.in)) {
 
             int turn = 0;
 
             while (true) {
-                shogiBan.render();
+                renderer.render();
 
                 var turnPlayer = players.get(turn % 2);
                 var nonTurnPlayer = players.stream().filter(p -> p != turnPlayer).findFirst().get();

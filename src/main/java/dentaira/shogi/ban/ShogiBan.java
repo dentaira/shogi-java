@@ -11,7 +11,7 @@ public class ShogiBan {
         this.field = new Koma[9][9];
     }
 
-    Koma getKoma(int x, int y) {
+    public Koma getKoma(int x, int y) {
         return field[y - 1][x - 1];
     }
 
@@ -42,25 +42,4 @@ public class ShogiBan {
         };
     }
 
-    public void render() {
-        for (int x = 9; 0 < x; x--) {
-            System.out.print(" ");
-            System.out.print(Masu.getSujiSymbol(x));
-            System.out.print("  ");
-        }
-        System.out.println();
-        for (int y = 1; y <= 9; y++) {
-            for (int x = 9; 1 <= x; x--) {
-                System.out.print(" ");
-                var koma = getKoma(x, y);
-                System.out.print(koma == null ? "　 " : koma.getType().getAbbreviation() + getMovingDirectionIcon(koma));
-                System.out.print(" ");
-            }
-            System.out.println(" " + Masu.getDanSymbol(y));
-        }
-    }
-
-    private String getMovingDirectionIcon(Koma koma) {
-        return koma.getForward() == Forward.LOWER ? "↑" : "↓";
-    }
 }
