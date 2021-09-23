@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public enum MovingStrategy {
@@ -24,70 +25,10 @@ public enum MovingStrategy {
         @Override
         public List<Masu> getMovingCandidates(Masu position, Forward forward, ShogiBan shogiBan) {
             var list = new ArrayList<Masu>();
-            for (int i = 1; i < 9; i++) {
-                var masu = position.shift(0, i, forward);
-                if (masu.isEmpty()) {
-                    break;
-                }
-                var koma = shogiBan.getKoma(masu.get());
-                if (koma != null && koma.getForward() == forward) {
-                    break;
-                }
-
-                list.add(masu.get());
-
-                if (koma != null && koma.getForward() != forward) {
-                    break;
-                }
-            }
-            for (int i = -1; i > -9; i--) {
-                var masu = position.shift(0, i, forward);
-                if (masu.isEmpty()) {
-                    break;
-                }
-                var koma = shogiBan.getKoma(masu.get());
-                if (koma != null && koma.getForward() == forward) {
-                    break;
-                }
-
-                list.add(masu.get());
-
-                if (koma != null && koma.getForward() != forward) {
-                    break;
-                }
-            }
-            for (int i = 1; i < 9; i++) {
-                var masu = position.shift(i, 0, forward);
-                if (masu.isEmpty()) {
-                    break;
-                }
-                var koma = shogiBan.getKoma(masu.get());
-                if (koma != null && koma.getForward() == forward) {
-                    break;
-                }
-
-                list.add(masu.get());
-
-                if (koma != null && koma.getForward() != forward) {
-                    break;
-                }
-            }
-            for (int i = -1; i > -9; i--) {
-                var masu = position.shift(i, 0, forward);
-                if (masu.isEmpty()) {
-                    break;
-                }
-                var koma = shogiBan.getKoma(masu.get());
-                if (koma != null && koma.getForward() == forward) {
-                    break;
-                }
-
-                list.add(masu.get());
-
-                if (koma != null && koma.getForward() != forward) {
-                    break;
-                }
-            }
+            list.addAll(getMovingLine(8, i -> position.shift(0, i, forward), forward, shogiBan));
+            list.addAll(getMovingLine(8, i -> position.shift(0, -i, forward), forward, shogiBan));
+            list.addAll(getMovingLine(8, i -> position.shift(i, 0, forward), forward, shogiBan));
+            list.addAll(getMovingLine(8, i -> position.shift(-i, 0, forward), forward, shogiBan));
             return list;
         }
     },
@@ -95,70 +36,10 @@ public enum MovingStrategy {
         @Override
         public List<Masu> getMovingCandidates(Masu position, Forward forward, ShogiBan shogiBan) {
             var list = new ArrayList<Masu>();
-            for (int i = 1; i < 9; i++) {
-                var masu = position.shift(i, i, forward);
-                if (masu.isEmpty()) {
-                    break;
-                }
-                var koma = shogiBan.getKoma(masu.get());
-                if (koma != null && koma.getForward() == forward) {
-                    break;
-                }
-
-                list.add(masu.get());
-
-                if (koma != null && koma.getForward() != forward) {
-                    break;
-                }
-            }
-            for (int i = 1; i < 9; i++) {
-                var masu = position.shift(-i, i, forward);
-                if (masu.isEmpty()) {
-                    break;
-                }
-                var koma = shogiBan.getKoma(masu.get());
-                if (koma != null && koma.getForward() == forward) {
-                    break;
-                }
-
-                list.add(masu.get());
-
-                if (koma != null && koma.getForward() != forward) {
-                    break;
-                }
-            }
-            for (int i = 1; i < 9; i++) {
-                var masu = position.shift(i, -i, forward);
-                if (masu.isEmpty()) {
-                    break;
-                }
-                var koma = shogiBan.getKoma(masu.get());
-                if (koma != null && koma.getForward() == forward) {
-                    break;
-                }
-
-                list.add(masu.get());
-
-                if (koma != null && koma.getForward() != forward) {
-                    break;
-                }
-            }
-            for (int i = 1; i < 9; i++) {
-                var masu = position.shift(-i, -i, forward);
-                if (masu.isEmpty()) {
-                    break;
-                }
-                var koma = shogiBan.getKoma(masu.get());
-                if (koma != null && koma.getForward() == forward) {
-                    break;
-                }
-
-                list.add(masu.get());
-
-                if (koma != null && koma.getForward() != forward) {
-                    break;
-                }
-            }
+            list.addAll(getMovingLine(8, i -> position.shift(i, i, forward), forward, shogiBan));
+            list.addAll(getMovingLine(8, i -> position.shift(i, -i, forward), forward, shogiBan));
+            list.addAll(getMovingLine(8, i -> position.shift(-i, i, forward), forward, shogiBan));
+            list.addAll(getMovingLine(8, i -> position.shift(-i, -i, forward), forward, shogiBan));
             return list;
         }
     },
@@ -179,24 +60,7 @@ public enum MovingStrategy {
     香車 {
         @Override
         public List<Masu> getMovingCandidates(Masu position, Forward forward, ShogiBan shogiBan) {
-            var list = new ArrayList<Masu>();
-            for (int i = 1; i < 9; i++) {
-                var masu = position.shift(0, i, forward);
-                if (masu.isEmpty()) {
-                    return list;
-                }
-                var koma = shogiBan.getKoma(masu.get());
-                if (koma != null && koma.getForward() == forward) {
-                    return list;
-                }
-
-                list.add(masu.get());
-
-                if (koma != null && koma.getForward() != forward) {
-                    return list;
-                }
-            }
-            return list;
+            return getMovingLine(8, i -> position.shift(0, i, forward), forward, shogiBan);
         }
     },
     歩兵(List.of(new MovingDistance(0, 1)));
@@ -229,6 +93,27 @@ public enum MovingStrategy {
             return Optional.empty();
         }
         return masu;
+    }
+
+    protected List<Masu> getMovingLine(int length, Function<Integer, Optional<Masu>> masuFunction, Forward forward, ShogiBan shogiBan) {
+        var list = new ArrayList<Masu>();
+        for (int i = 1; i <= length; i++) {
+            var masu = masuFunction.apply(i);
+            if (masu.isEmpty()) {
+                return list;
+            }
+            var koma = shogiBan.getKoma(masu.get());
+            if (koma != null && koma.getForward() == forward) {
+                return list;
+            }
+
+            list.add(masu.get());
+
+            if (koma != null && koma.getForward() != forward) {
+                return list;
+            }
+        }
+        return list;
     }
 
 }
