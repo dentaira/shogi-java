@@ -6,7 +6,7 @@ package dentaira.shogi.koma;
 public enum PromotedKomaType implements KomaType {
 
     竜王("竜", MovingStrategy.竜王),
-    龍馬("馬", MovingStrategy.竜馬),
+    竜馬("馬", MovingStrategy.竜馬),
     成銀("全", MovingStrategy.金将),
     成桂("含", MovingStrategy.金将),
     成香("索", MovingStrategy.金将),
