@@ -37,7 +37,7 @@ public class CommandLineShogiRunner {
                     continue;
                 }
 
-                var pickedKoma = shogiBan.moveKoma(from, to);
+                var tookKoma = shogiBan.moveKoma(from, to);
                 if (shogiBan.isEnemyTerritory(to, turnPlayer.getPlayOrder().getForward())) {
                     var koma = shogiBan.getKoma(to);
                     if (koma.canPromote()) {
@@ -48,10 +48,10 @@ public class CommandLineShogiRunner {
                         }
                     }
                 }
-                if (pickedKoma != null) {
-                    nonTurnPlayer.removeKoma(pickedKoma);
-                    turnPlayer.addKoma(pickedKoma);
-                    System.out.println(turnPlayer.getName() + " が " + pickedKoma.getType().name() + " を取得しました。");
+                if (tookKoma != null) {
+                    nonTurnPlayer.removeFromAlive(tookKoma);
+                    turnPlayer.addToTook(tookKoma);
+                    System.out.println(turnPlayer.getName() + " が " + tookKoma.getType().name() + " を取得しました。");
                 }
 
                 if (!nonTurnPlayer.hasKing()) {
@@ -69,8 +69,10 @@ public class CommandLineShogiRunner {
             System.out.print("成駒しますか？(y/n)：");
             var input = sc.next();
             switch (input) {
-                case "y": return true;
-                case "n": return false;
+                case "y":
+                    return true;
+                case "n":
+                    return false;
                 default:
                     System.out.println("y か n を入力してください。");
                     continue;
@@ -108,7 +110,7 @@ public class CommandLineShogiRunner {
             return null;
         }
 
-        if (!player.hasKoma(koma)) {
+        if (!player.hasAliveKoma(koma)) {
             System.out.println("自分のコマを選択してください。");
             return null;
         }

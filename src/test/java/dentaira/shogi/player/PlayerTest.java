@@ -17,24 +17,24 @@ class PlayerTest {
         @Test
         void testGyokuExists() {
             var player = new Player("name", PlayOrder.先手);
-            player.addKoma(new Koma(StandardKomaType.玉将, Forward.LOWER));
-            player.addKoma(new Koma(StandardKomaType.金将, Forward.LOWER));
+            player.addToAlive(new Koma(StandardKomaType.玉将, Forward.LOWER));
+            player.addToAlive(new Koma(StandardKomaType.金将, Forward.LOWER));
             assertTrue(player.hasKing());
         }
 
         @Test
         void testOuExists() {
             var player = new Player("name", PlayOrder.先手);
-            player.addKoma(new Koma(StandardKomaType.王将, Forward.LOWER));
-            player.addKoma(new Koma(StandardKomaType.金将, Forward.LOWER));
+            player.addToAlive(new Koma(StandardKomaType.王将, Forward.LOWER));
+            player.addToAlive(new Koma(StandardKomaType.金将, Forward.LOWER));
             assertTrue(player.hasKing());
         }
 
         @Test
         void testGyokuAndOuDoesNotExist() {
             var player = new Player("name", PlayOrder.先手);
-            player.addKoma(new Koma(StandardKomaType.金将, Forward.LOWER));
-            player.addKoma(new Koma(StandardKomaType.歩兵, Forward.LOWER));
+            player.addToAlive(new Koma(StandardKomaType.金将, Forward.LOWER));
+            player.addToAlive(new Koma(StandardKomaType.歩兵, Forward.LOWER));
             assertFalse(player.hasKing());
         }
 

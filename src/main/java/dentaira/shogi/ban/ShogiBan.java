@@ -29,10 +29,10 @@ public class ShogiBan {
 
     public Koma moveKoma(Masu from, Masu to) {
         var moveKoma = getKoma(from);
-        var pickedKoma = getKoma(to);
+        var tookKoma = getKoma(to);
         setKoma(moveKoma, to);
         setKoma(null, from);
-        return pickedKoma;
+        return tookKoma;
     }
 
     public boolean isEnemyTerritory(Masu masu, Forward forward) {

@@ -17,12 +17,24 @@ public class Player {
 
     private PlayOrder playOrder;
 
-    private List<Koma> komas;
+    private List<Koma> aliveKomas;
+
+    private List<Koma> tookKomas;
 
     public Player(String name, PlayOrder playOrder) {
         this.name = name;
         this.playOrder = playOrder;
-        this.komas = new ArrayList<>();
+        this.aliveKomas = new ArrayList<>();
+        this.tookKomas = new ArrayList<>();
+    }
+
+    public void setUp(ShogiBan shogiBan) {
+        var forward = playOrder.getForward();
+        for (Map.Entry<Masu, KomaType> entry : InitialKomaPositions.getPositions(playOrder).entrySet()) {
+            var koma = new Koma(entry.getValue(), forward);
+            aliveKomas.add(koma);
+            shogiBan.setKoma(koma, entry.getKey());
+        }
     }
 
     public String getName() {
@@ -33,33 +45,28 @@ public class Player {
         return playOrder;
     }
 
-    public void addKoma(Koma koma) {
-        komas.add(koma);
+    public boolean hasAliveKoma(Koma koma) {
+        return aliveKomas.contains(koma);
     }
 
-    public void removeKoma(Koma koma) {
-        komas.remove(koma);
+    public void addToAlive(Koma koma) {
+        aliveKomas.add(koma);
     }
 
-    public void setUp(ShogiBan shogiBan) {
-        var forward = playOrder.getForward();
-        for (Map.Entry<Masu, KomaType> entry : InitialKomaPositions.getPositions(playOrder).entrySet()) {
-            var koma = new Koma(entry.getValue(), forward);
-            komas.add(koma);
-            shogiBan.setKoma(koma, entry.getKey());
-        }
+    public void removeFromAlive(Koma koma) {
+        aliveKomas.remove(koma);
     }
 
-    public boolean hasKoma(Koma koma) {
-        return komas.contains(koma);
+    public void addToTook(Koma koma) {
+        tookKomas.add(koma);
     }
 
     public boolean hasKing() {
-        return komas.stream().anyMatch(k -> k.getType() == StandardKomaType.玉将 || k.getType() == StandardKomaType.王将);
+        return aliveKomas.stream().anyMatch(k -> k.getType() == StandardKomaType.玉将 || k.getType() == StandardKomaType.王将);
     }
 
     public boolean canMoveTo(Masu to, ShogiBan shogiBan) {
         var koma = shogiBan.getKoma(to);
-        return !hasKoma(koma);
+        return !hasAliveKoma(koma);
     }
 }
