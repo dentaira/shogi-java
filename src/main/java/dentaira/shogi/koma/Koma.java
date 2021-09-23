@@ -1,8 +1,8 @@
 package dentaira.shogi.koma;
 
 import dentaira.shogi.ban.Masu;
+import dentaira.shogi.ban.ShogiBan;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Koma {
@@ -24,12 +24,8 @@ public class Koma {
         return forward;
     }
 
-    public List<Masu> getMovingCandidate(Masu placed) {
-        var list = new ArrayList<Masu>();
-        for (var movingDistance : getType().getMovingDistances()) {
-            var candidate = placed.shift(movingDistance.x(), movingDistance.y(), forward);
-            candidate.ifPresent(list::add);
-        }
-        return list;
+    public List<Masu> getMovingCandidates(Masu placed, ShogiBan shogiBan) {
+        var strategy = type.getMovingStrategy();
+        return strategy.getMovingCandidates(placed, forward, shogiBan);
     }
 }

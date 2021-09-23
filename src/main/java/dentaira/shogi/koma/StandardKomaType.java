@@ -1,7 +1,5 @@
 package dentaira.shogi.koma;
 
-import java.util.List;
-
 public enum StandardKomaType implements KomaType {
 
     玉将(MovingStrategy.玉将),
@@ -35,7 +33,8 @@ public enum StandardKomaType implements KomaType {
     }
 
     @Override
-    public List<MovingDistance> getMovingDistances() {
-        return movingStrategy.getMovingDistances();
+    public MovingStrategy getMovingStrategy() {
+        return movingStrategy;
     }
+
 }

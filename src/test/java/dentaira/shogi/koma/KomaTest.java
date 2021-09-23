@@ -1,6 +1,7 @@
 package dentaira.shogi.koma;
 
 import dentaira.shogi.ban.Masu;
+import dentaira.shogi.ban.ShogiBan;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,10 +22,11 @@ class KomaTest {
         @ParameterizedTest
         @MethodSource("testSource")
         void test(StandardKomaType komaType, int x, int y, List<Masu> expected) {
-            var koma = new Koma(komaType, Forward.LOWER);
+            var koma = new Koma(komaType, Forward.HIGHER);
             var placed = new Masu(x, y);
+            var shogiBan = new ShogiBan();
 
-            var actual = koma.getMovingCandidate(placed);
+            var actual = koma.getMovingCandidates(placed, shogiBan);
 
             assertThat(actual).containsExactlyElementsOf(expected);
         }

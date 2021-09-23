@@ -1,12 +1,9 @@
 package dentaira.shogi.koma;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * TODO 金のくずし字をどうするか考える
  */
-public enum PromotedKomaType implements KomaType {
+public enum PromotedKomaType {
 
     竜王("竜"),
     龍馬("馬"),
@@ -21,14 +18,11 @@ public enum PromotedKomaType implements KomaType {
         this.abbreviation = abbreviation;
     }
 
-    @Override
     public String getAbbreviation() {
         return abbreviation;
     }
 
-    @Override
-    public List<MovingDistance> getMovingDistances() {
-        // TODO MovingStrategyが完成したら修正
-        return Collections.emptyList();
+    public MovingStrategy getMovingStrategy() {
+        return null;
     }
 }
