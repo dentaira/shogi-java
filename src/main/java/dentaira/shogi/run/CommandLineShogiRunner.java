@@ -97,8 +97,12 @@ public class CommandLineShogiRunner {
     private static Masu selectTo(ShogiBan shogiBan, Masu from, Scanner sc) {
 
         var koma = shogiBan.getKoma(from);
-        var myForward = koma.getForward();
         List<Masu> movingCandidate = koma.getMovingCandidates(from, shogiBan);
+        if (movingCandidate.isEmpty()) {
+            System.out.println("移動できるマスがありません。");
+            return null;
+        }
+
         System.out.println("移動するマスを選択してください。（半角数字で入力）");
         movingCandidate.stream().forEach(System.out::println);
         System.out.print("筋段:");
