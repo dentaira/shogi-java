@@ -69,10 +69,10 @@ public enum MovingStrategy {
         public List<Masu> getMovingCandidates(Masu position, Forward forward, ShogiBan shogiBan) {
             var list = new ArrayList<Masu>();
             list.addAll(飛車.getMovingCandidates(position, forward, shogiBan));
-            getMovingCandidate(new MovingDistance(-1, -1), position, forward, shogiBan).ifPresent(m -> list.add(m));
-            getMovingCandidate(new MovingDistance(1, -1), position, forward, shogiBan).ifPresent(m -> list.add(m));
-            getMovingCandidate(new MovingDistance(1, 1), position, forward, shogiBan).ifPresent(m -> list.add(m));
-            getMovingCandidate(new MovingDistance(-1, 1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingPoint(new MovingDistance(-1, -1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingPoint(new MovingDistance(1, -1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingPoint(new MovingDistance(1, 1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingPoint(new MovingDistance(-1, 1), position, forward, shogiBan).ifPresent(m -> list.add(m));
             return list;
         }
     },
@@ -81,10 +81,10 @@ public enum MovingStrategy {
         public List<Masu> getMovingCandidates(Masu position, Forward forward, ShogiBan shogiBan) {
             var list = new ArrayList<Masu>();
             list.addAll(角行.getMovingCandidates(position, forward, shogiBan));
-            getMovingCandidate(new MovingDistance(0, -1), position, forward, shogiBan).ifPresent(m -> list.add(m));
-            getMovingCandidate(new MovingDistance(0, 1), position, forward, shogiBan).ifPresent(m -> list.add(m));
-            getMovingCandidate(new MovingDistance(1, 0), position, forward, shogiBan).ifPresent(m -> list.add(m));
-            getMovingCandidate(new MovingDistance(-1, 0), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingPoint(new MovingDistance(0, -1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingPoint(new MovingDistance(0, 1), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingPoint(new MovingDistance(1, 0), position, forward, shogiBan).ifPresent(m -> list.add(m));
+            getMovingPoint(new MovingDistance(-1, 0), position, forward, shogiBan).ifPresent(m -> list.add(m));
             return list;
         }
     };
@@ -101,13 +101,13 @@ public enum MovingStrategy {
 
     public List<Masu> getMovingCandidates(Masu position, Forward forward, ShogiBan shogiBan) {
         return movingDistances.stream()
-                .map(d -> getMovingCandidate(d, position, forward, shogiBan))
+                .map(d -> getMovingPoint(d, position, forward, shogiBan))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
     }
 
-    protected Optional<Masu> getMovingCandidate(MovingDistance movingDistance, Masu position, Forward forward, ShogiBan shogiBan) {
+    protected Optional<Masu> getMovingPoint(MovingDistance movingDistance, Masu position, Forward forward, ShogiBan shogiBan) {
         var masu = position.shift(movingDistance.x(), movingDistance.y(), forward);
         if (masu.isEmpty()) {
             return masu;

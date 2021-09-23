@@ -24,8 +24,7 @@ public class Koma {
         return forward;
     }
 
-    public List<Masu> getMovingCandidates(Masu placed, ShogiBan shogiBan) {
-        var strategy = type.getMovingStrategy();
-        return strategy.getMovingCandidates(placed, forward, shogiBan);
+    public List<Masu> getMovingCandidates(Masu position, ShogiBan shogiBan) {
+        return type.getMovingStrategy().getMovingCandidates(position, forward, shogiBan);
     }
 }
