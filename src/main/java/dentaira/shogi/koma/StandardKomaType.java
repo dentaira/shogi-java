@@ -9,7 +9,7 @@ public enum StandardKomaType implements KomaType {
     金将(MovingStrategy.金将),
     銀将(MovingStrategy.銀将),
     桂馬(MovingStrategy.桂馬),
-    香車,
+    香車(MovingStrategy.香車),
     歩兵(MovingStrategy.歩兵);
 
     private String abbreviation;
