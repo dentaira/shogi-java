@@ -32,8 +32,15 @@ public record Masu(int x, int y) {
         return danArray[y - 1];
     }
 
+    public Optional<Masu> shift(int x, int y, Forward forward) {
+        return switch (forward) {
+            case LOWER -> shift(-x, -y);
+            case HIGHER -> shift(x, y);
+        };
+    }
+
     @Deprecated
-    public Optional<Masu> shift(int x, int y) {
+    Optional<Masu> shift(int x, int y) {
         try {
             return Optional.of(new Masu(x() + x, y() + y));
         } catch (IllegalArgumentException e) {
@@ -41,10 +48,4 @@ public record Masu(int x, int y) {
         }
     }
 
-    public Optional<Masu> shift(int x, int y, Forward forward) {
-        return switch (forward) {
-            case LOWER -> shift(-x, -y);
-            case HIGHER -> shift(x, y);
-        };
-    }
 }

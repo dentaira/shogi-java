@@ -53,7 +53,7 @@ class MasuTest {
                 "1, 1, -1, 0",
                 "1, 1, 0, -1",
         })
-        void testInvelidValue(int nowX, int nowY, int plusX, int plusY) {
+        void testInvalidValue(int nowX, int nowY, int plusX, int plusY) {
             var now = new Masu(nowX, nowY);
             var actual = now.shift(plusX, plusY);
             assertEquals(Optional.empty(), actual);
