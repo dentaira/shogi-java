@@ -1,7 +1,7 @@
 package dentaira.shogi.ban;
 
-import dentaira.shogi.koma.Koma;
 import dentaira.shogi.koma.Forward;
+import dentaira.shogi.koma.Koma;
 
 public class ShogiBan {
 
@@ -33,6 +33,13 @@ public class ShogiBan {
         setKoma(moveKoma, to);
         setKoma(null, from);
         return pickedKoma;
+    }
+
+    public boolean isEnemyTerritory(Masu masu, Forward forward) {
+        return switch (forward) {
+            case LOWER -> masu.y() < 4;
+            case HIGHER -> masu.y() > 6;
+        };
     }
 
     public void render() {

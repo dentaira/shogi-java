@@ -5,6 +5,8 @@ import dentaira.shogi.koma.Forward;
 import dentaira.shogi.koma.StandardKomaType;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -53,6 +55,22 @@ class ShogiBanTest {
             assertSame(moveKoma, ban.getKoma(to));
             assertEquals(null, ban.getKoma(from));
             assertSame(otherKoma, ban.getKoma(8, 4));
+        }
+    }
+
+    @Nested
+    class IsEnemyTerritoryTest {
+
+        @ParameterizedTest
+        @CsvSource({"9, 1, true", "9, 2, true", "9, 3, true", "9, 4, false", "9, 9, false"})
+        void testLower(int x, int y, boolean expected) {
+            assertEquals(expected, new ShogiBan().isEnemyTerritory(new Masu(x, y), Forward.LOWER));
+        }
+
+        @ParameterizedTest
+        @CsvSource({"9, 7, true", "9, 8, true", "9, 9, true", "9, 6, false", "9, 1, false"})
+        void testHigher(int x, int y, boolean expected) {
+            assertEquals(expected, new ShogiBan().isEnemyTerritory(new Masu(x, y), Forward.HIGHER));
         }
     }
 }

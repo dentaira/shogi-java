@@ -27,4 +27,24 @@ public class Koma {
     public List<Masu> getMovingCandidates(Masu position, ShogiBan shogiBan) {
         return type.getMovingStrategy().getMovingCandidates(position, forward, shogiBan);
     }
+
+    public boolean canPromote() {
+        if (type instanceof StandardKomaType t) {
+            return t.canPromote();
+        } else {
+            return false;
+        }
+    }
+
+    public void promote() {
+        if (type instanceof StandardKomaType t) {
+            this.type = t.promote();
+        }
+    }
+
+    public void demote() {
+        if (type instanceof PromotedKomaType t) {
+            this.type = t.demote();
+        }
+    }
 }

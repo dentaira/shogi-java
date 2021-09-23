@@ -38,6 +38,16 @@ public class CommandLineShogiRunner {
                 }
 
                 var pickedKoma = shogiBan.moveKoma(from, to);
+                if (shogiBan.isEnemyTerritory(to, turnPlayer.getPlayOrder().getForward())) {
+                    var koma = shogiBan.getKoma(to);
+                    if (koma.canPromote()) {
+                        boolean wantNarigoma = selectNarigoma(sc);
+                        if (wantNarigoma) {
+                            koma.promote();
+                            System.out.println(to.toString() + " " + koma.getType().getAbbreviation());
+                        }
+                    }
+                }
                 if (pickedKoma != null) {
                     nonTurnPlayer.removeKoma(pickedKoma);
                     turnPlayer.addKoma(pickedKoma);
@@ -50,6 +60,20 @@ public class CommandLineShogiRunner {
                 }
 
                 turn++;
+            }
+        }
+    }
+
+    private static boolean selectNarigoma(Scanner sc) {
+        while (true) {
+            System.out.print("成駒しますか？(y/n)：");
+            var input = sc.next();
+            switch (input) {
+                case "y": return true;
+                case "n": return false;
+                default:
+                    System.out.println("y か n を入力してください。");
+                    continue;
             }
         }
     }

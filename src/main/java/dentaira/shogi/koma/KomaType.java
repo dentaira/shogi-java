@@ -7,4 +7,5 @@ public interface KomaType {
     String getAbbreviation();
 
     MovingStrategy getMovingStrategy();
+
 }
