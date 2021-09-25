@@ -69,4 +69,8 @@ public class Player {
         var koma = shogiBan.getKoma(to);
         return !hasAliveKoma(koma);
     }
+
+    public List<Koma> getTookKomas() {
+        return tookKomas;
+    }
 }

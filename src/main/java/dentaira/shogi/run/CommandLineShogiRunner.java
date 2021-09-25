@@ -52,6 +52,7 @@ public class CommandLineShogiRunner {
                 }
                 if (tookKoma != null) {
                     nonTurnPlayer.removeFromAlive(tookKoma);
+                    tookKoma.switchSides();
                     turnPlayer.addToTook(tookKoma);
                     System.out.println(turnPlayer.getName() + " が " + tookKoma.getType().name() + " を取得しました。");
                 }

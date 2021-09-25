@@ -42,9 +42,10 @@ public class Koma {
         }
     }
 
-    public void demote() {
+    public void switchSides() {
         if (type instanceof PromotedKomaType t) {
             this.type = t.demote();
         }
+        this.forward = Forward.reverse(forward);
     }
 }

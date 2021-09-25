@@ -36,6 +36,13 @@ public class CommandLineShogiRenderer {
             }
             System.out.println(" " + Masu.getDanSymbol(y));
         }
+
+        System.out.print(sentePlayer.getName() + "の持ち駒：");
+        sentePlayer.getTookKomas().forEach(k -> System.out.print(k.getType().getAbbreviation()));
+        System.out.println();
+        System.out.print(gotePlayer.getName() + "の持ち駒：");
+        gotePlayer.getTookKomas().forEach(k -> System.out.print(k.getType().getAbbreviation()));
+        System.out.println();
     }
 
     private String getMovingDirectionIcon(Koma koma) {
