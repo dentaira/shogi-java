@@ -73,4 +73,8 @@ public class Player {
     public List<Koma> getTookKomas() {
         return tookKomas;
     }
+
+    public void removeFromTook(Koma koma) {
+        tookKomas.remove(koma);
+    }
 }
