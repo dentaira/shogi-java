@@ -70,7 +70,10 @@ public class CommandLineShogiRunner {
 
                 } else {
                     // 持ち駒を打つ
-                    // TODO 持ち駒はありません。
+                    if (!turnPlayer.hasTookKomas()) {
+                        System.out.println("持ち駒がありません。");
+                        continue;
+                    }
                     System.out.println("持ち駒を選択してください。");
                     List<Koma> tookKomas = turnPlayer.getTookKomas();
                     var tookKomaLine = IntStream.range(0, tookKomas.size())

@@ -74,6 +74,10 @@ public class Player {
         return tookKomas;
     }
 
+    public boolean hasTookKomas() {
+        return !tookKomas.isEmpty();
+    }
+
     public void removeFromTook(Koma koma) {
         tookKomas.remove(koma);
     }
