@@ -3,6 +3,7 @@ package dentaira.shogi.run;
 import dentaira.shogi.ban.Masu;
 import dentaira.shogi.ban.ShogiBan;
 import dentaira.shogi.koma.Koma;
+import dentaira.shogi.koma.StandardKomaType;
 import dentaira.shogi.player.PlayOrder;
 import dentaira.shogi.player.Player;
 
@@ -69,6 +70,7 @@ public class CommandLineShogiRunner {
 
                 } else {
                     // 持ち駒を打つ
+                    // TODO 持ち駒はありません。
                     System.out.println("持ち駒を選択してください。");
                     List<Koma> tookKomas = turnPlayer.getTookKomas();
                     var tookKomaLine = IntStream.range(0, tookKomas.size())
@@ -89,7 +91,6 @@ public class CommandLineShogiRunner {
                         System.out.println("持ち駒の番号を入力してください。");
                         continue;
                     }
-                    // TODO
                     System.out.println("コマを置くマスを入力してください。");
                     System.out.print("筋段：");
                     var inputResult = scanInputMasu(sc);
@@ -98,9 +99,15 @@ public class CommandLineShogiRunner {
                         continue;
                     }
                     Masu to = inputResult.getInput();
-                    if(shogiBan.getKoma(to) != null) {
+                    if (shogiBan.getKoma(to) != null) {
                         System.out.println("コマが存在するマスには置けません。");
                         continue;
+                    }
+                    if (koma.getType() == StandardKomaType.歩兵) {
+                        if (shogiBan.has歩(to.x(), turnPlayer.getPlayOrder().getForward())) {
+                            System.out.println("二歩です。");
+                            continue;
+                        }
                     }
                     shogiBan.setKoma(koma, to);
                     turnPlayer.removeFromTook(koma);

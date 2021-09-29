@@ -2,6 +2,10 @@ package dentaira.shogi.ban;
 
 import dentaira.shogi.koma.Forward;
 import dentaira.shogi.koma.Koma;
+import dentaira.shogi.koma.StandardKomaType;
+
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class ShogiBan {
 
@@ -42,4 +46,11 @@ public class ShogiBan {
         };
     }
 
+    public boolean has歩(int suji, Forward forward) {
+        int index = suji - 1;
+        return IntStream.range(0, 9)
+                .mapToObj(i -> field[i][index])
+                .filter(Objects::nonNull)
+                .anyMatch(k -> k.getType() == StandardKomaType.歩兵 && k.getForward() == forward);
+    }
 }

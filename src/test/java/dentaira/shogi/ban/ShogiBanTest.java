@@ -1,7 +1,7 @@
 package dentaira.shogi.ban;
 
-import dentaira.shogi.koma.Koma;
 import dentaira.shogi.koma.Forward;
+import dentaira.shogi.koma.Koma;
 import dentaira.shogi.koma.StandardKomaType;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -71,6 +71,42 @@ class ShogiBanTest {
         @CsvSource({"9, 7, true", "9, 8, true", "9, 9, true", "9, 6, false", "9, 1, false"})
         void testHigher(int x, int y, boolean expected) {
             assertEquals(expected, new ShogiBan().isEnemyTerritory(new Masu(x, y), Forward.HIGHER));
+        }
+    }
+
+    @Nested
+    class Has歩Test {
+
+        @Test
+        void testSameForward歩ExistsInSameSuji() {
+            var ban = new ShogiBan();
+            ban.setKoma(new Koma(StandardKomaType.歩兵, Forward.LOWER), 1, 1);
+
+            assertEquals(true, ban.has歩(1, Forward.LOWER));
+        }
+
+        @Test
+        void test歩DoesNotExist() {
+            var ban = new ShogiBan();
+            ban.setKoma(new Koma(StandardKomaType.金将, Forward.LOWER), 1, 1);
+
+            assertEquals(false, ban.has歩(1, Forward.LOWER));
+        }
+
+        @Test
+        void testNotSameForward歩ExistsInSameSuji() {
+            var ban = new ShogiBan();
+            ban.setKoma(new Koma(StandardKomaType.歩兵, Forward.LOWER), 1, 1);
+
+            assertEquals(false, ban.has歩(1, Forward.HIGHER));
+        }
+
+        @Test
+        void testSameForward歩ExistsInAdjacentSuji() {
+            var ban = new ShogiBan();
+            ban.setKoma(new Koma(StandardKomaType.歩兵, Forward.LOWER), 2, 1);
+
+            assertEquals(false, ban.has歩(1, Forward.LOWER));
         }
     }
 }
