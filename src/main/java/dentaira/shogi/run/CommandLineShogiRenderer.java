@@ -11,6 +11,10 @@ import java.util.List;
 
 public class CommandLineShogiRenderer {
 
+    private static final int VERTICAL_SIZE = 10;
+
+    private static final int CHUNK_SIZE = 6;
+
     private ShogiBan shogiBan;
 
     private Player sentePlayer;
@@ -24,15 +28,15 @@ public class CommandLineShogiRenderer {
     }
 
     public void render() {
-        List<String> goteTookKomaLine = createGotePlayerTookKomaLine();
-        List<String> senteTookKomaLine = createSentePlayerTookKomaLine();
+        List<String> goteKomadaiLine = createGoteKomadaiLine();
+        List<String> senteKomadaiLine = createSenteKomadaiLine();
         List<String> shogiBanLine = createShogiBanLine();
 
-        for (int i = 0; i < 10; i++) {
-            System.out.print(goteTookKomaLine.get(i));
+        for (int i = 0; i < VERTICAL_SIZE; i++) {
+            System.out.print(goteKomadaiLine.get(i));
             System.out.print(shogiBanLine.get(i));
             System.out.print("  ");
-            System.out.println(senteTookKomaLine.get(i));
+            System.out.println(senteKomadaiLine.get(i));
         }
 
     }
@@ -62,54 +66,56 @@ public class CommandLineShogiRenderer {
         return lines;
     }
 
-    List<String> createSentePlayerTookKomaLine() {
+    List<String> createSenteKomadaiLine() {
         var lines = new ArrayList<String>();
-        var tookKomas = sentePlayer.getTookKomas();
-        int chunkSize = 10;
-        var chunked = new ArrayList<List<Koma>>();
-        for (int i = 0; i < tookKomas.size(); i += chunkSize) {
-            List<Koma> chunk = new ArrayList<>(tookKomas.subList(i, Math.min(i + chunkSize, tookKomas.size())));
-            chunked.add(chunk);
-        }
-        for (int i = 9; i >= 0; i--) {
+        ArrayList<Koma[]> chunks = devideKomas(sentePlayer.getTookKomas());
+
+        for (int i = VERTICAL_SIZE - 1; i >= 0; i--) {
             String line = "";
-            for (var chunk : chunked) {
-                if (chunk.size() > i) {
-                    var koma = chunk.get(i);
-                    line += koma.getType().getAbbreviation() + getMovingDirectionIcon(koma);
-                } else {
+            for (int j = 0; j < chunks.size(); j++) {
+                var koma = chunks.get(j)[i];
+                if (koma == null) {
                     line += "　 ";
+                } else {
+                    line += koma.getType().getAbbreviation() + getMovingDirectionIcon(koma);
                 }
                 line += " ";
             }
             lines.add(line);
         }
+
         return lines;
     }
 
-    List<String> createGotePlayerTookKomaLine() {
+    List<String> createGoteKomadaiLine() {
         var lines = new ArrayList<String>();
-        var tookKomas = gotePlayer.getTookKomas();
-        int chunkSize = 10;
-        var chunked = new ArrayList<List<Koma>>();
-        for (int i = 0; i < tookKomas.size(); i += chunkSize) {
-            List<Koma> chunk = new ArrayList<>(tookKomas.subList(i, Math.min(i + chunkSize, tookKomas.size())));
-            chunked.add(chunk);
-        }
-        for (int i = 0; i < 10; i++) {
+        ArrayList<Koma[]> chunks = devideKomas(gotePlayer.getTookKomas());
+
+        for (int i = 0; i < VERTICAL_SIZE; i++) {
             String line = "";
-            for (var chunk : chunked) {
-                if (chunk.size() > i) {
-                    var koma = chunk.get(i);
-                    line += koma.getType().getAbbreviation() + getMovingDirectionIcon(koma);
-                } else {
+            for (int j = chunks.size() - 1; j >= 0; j--) {
+                var koma = chunks.get(j)[i];
+                if (koma == null) {
                     line += "　 ";
+                } else {
+                    line += koma.getType().getAbbreviation() + getMovingDirectionIcon(koma);
                 }
                 line += " ";
             }
             lines.add(line);
         }
+
         return lines;
+    }
+
+    private ArrayList<Koma[]> devideKomas(List<Koma> tookKomas) {
+        var chunks = new ArrayList<Koma[]>();
+        for (int i = 0; i < tookKomas.size(); i += CHUNK_SIZE) {
+            var chunk = tookKomas.subList(i, Math.min(i + CHUNK_SIZE, tookKomas.size()))
+                    .toArray(new Koma[VERTICAL_SIZE]);
+            chunks.add(chunk);
+        }
+        return chunks;
     }
 
     private String getMovingDirectionIcon(Koma koma) {
